@@ -12,9 +12,9 @@ public class Notes {
     private Integer noteId;
     private String noteTitle;
     private String noteDescription;
-    private User userId;
+    private Integer userId;
 
-    public Notes(Integer noteId, String noteTitle, String noteDescription, User userId) {
+    public Notes() {
         this.noteId = noteId;
         this.noteTitle = noteTitle;
         this.noteDescription = noteDescription;
@@ -45,11 +45,11 @@ public class Notes {
         this.noteDescription = noteDescription;
     }
 
-    public User getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(User userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 }

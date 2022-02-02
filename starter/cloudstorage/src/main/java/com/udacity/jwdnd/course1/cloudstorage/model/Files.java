@@ -15,10 +15,10 @@ public class Files {
     private String filename;
     private String contentType;
     private String fileSize;
-    private User userId;
+    private Integer userId;
     private byte[] fileData;
 
-    public Files(Integer fileId, String filename, String contentType, String fileSize, User userId, byte[] fileData) {
+    public Files(Integer fileId, String filename, String contentType, String fileSize, Integer userId, byte[] fileData) {
         this.fileId = fileId;
         this.filename = filename;
         this.contentType = contentType;
@@ -59,19 +59,19 @@ public class Files {
         this.fileSize = fileSize;
     }
 
-    public User getUserId() {
-        return userId;
-    }
-
-    public void setUserId(User userId) {
-        this.userId = userId;
-    }
-
-    public byte[] getFileData() {
+   public byte[] getFileData() {
         return fileData;
     }
 
     public void setFileData(byte[] fileData) {
         this.fileData = fileData;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

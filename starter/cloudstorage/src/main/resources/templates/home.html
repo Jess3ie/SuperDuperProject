@@ -11,6 +11,8 @@
     <body class="p-3 mb-2 bg-light text-black">
         <div class="container">
             <div id="logoutDiv">
+                <!-- TODO logout button-->
+
                 <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
                     <button type="submit" class="btn btn-secondary float-right">Logout</button>
                 </form>
@@ -75,13 +77,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr th:each="note : ${existingNotes}">
                                         <td>
                                             <button type="button" class="btn btn-success">Edit</button>
                                             <a class="btn btn-danger">Delete</a>
                                         </td>
-                                        <th scope="row">Example Note Title</th>
-                                        <td>Example Note Description </td>
+                                        <th scope="row" th:text="${note.getNoteTitle()}"></th>
+                                        <td th:text="${note.getNoteDescription()}">Example Note Description </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -97,7 +99,8 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="#" method="POST">
+<!--                                        TODO does this need thymeleaf attributes like th:action-->
+                                        <form  th:action="@{/note}" method="POST">
                                             <input type="hidden" name="noteId" id="note-id">
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">Title</label>
@@ -107,6 +110,7 @@
                                                 <label for="note-description" class="col-form-label">Description</label>
                                                 <textarea class="form-control" name="noteDescription" id="note-description" rows="5" maxlength="1000" required></textarea>
                                             </div>
+
                                             <button id="noteSubmit" type="submit" class="d-none"></button>
                                         </form>
                                     </div>
@@ -157,6 +161,8 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
+                                        <!--                                        TODO does this need thymeleaf attributes like th:action-->
+
                                         <form action="#" method="POST">
                                             <input type="hidden" name="credentialId" id="credential-id">
                                             <div class="form-group">
