@@ -1,39 +1,48 @@
 package com.udacity.jwdnd.course1.cloudstorage.controllers;
 
+import com.udacity.jwdnd.course1.cloudstorage.model.Credentials;
+import com.udacity.jwdnd.course1.cloudstorage.model.Files;
 import com.udacity.jwdnd.course1.cloudstorage.model.Notes;
-import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
+import com.udacity.jwdnd.course1.cloudstorage.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 @Controller
 public class HomeController {
 
+    private NoteService noteService;
+    private FileSystemStorageService fileSystemStorageService;
+    private EncryptionService encryptionService;
+    private CredentialService credentialService;
+    private UserService userService;
 
-    @Autowired private NoteService noteService;
+    @Autowired
+    public HomeController(NoteService noteService, FileSystemStorageService fileSystemStorageService, EncryptionService encryptionService, CredentialService credentialService, UserService userService) {
+        this.noteService = noteService;
+        this.fileSystemStorageService = fileSystemStorageService;
+        this.encryptionService = encryptionService;
+        this.credentialService = credentialService;
+        this.userService = userService;
+    }
 
-@GetMapping("/home")
+    @GetMapping("/home")
     public String getHomePage(Model model) {
 
-       // model.addAtrribute("logout");
+        List<Notes> notes = noteService.getAllNotes();
+        model.addAttribute("userNotes", notes);
 
-    List<Notes> notes = noteService.getAllNotes();
+        List<Credentials> credentials = credentialService.getAllCredentials();
+        model.addAttribute("userCredentials", credentials);
 
-    model.addAttribute("existingNotes", notes);
+        List<Files> files = fileSystemStorageService.getAllFiles();
+        model.addAttribute("userFiles", files);
+
         return "home";
     }
-
-    @PostMapping("/file-upload")
-    public InputStream handleFileUpload(@RequestParam("fileUpload")MultipartFile fileUpload, Model model) throws IOException {
-        InputStream fis = fileUpload.getInputStream();
-        return fis;
-    }
 }
+
+

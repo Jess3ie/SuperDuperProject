@@ -3,7 +3,6 @@ package com.udacity.jwdnd.course1.cloudstorage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -88,8 +87,6 @@ class CloudStorageApplicationTests {
 		*/
 		Assertions.assertTrue(driver.findElement(By.id("success-msg")).getText().contains("You successfully signed up!"));
 	}
-
-	
 	
 	/**
 	 * PLEASE DO NOT DELETE THIS method.
@@ -200,6 +197,47 @@ class CloudStorageApplicationTests {
 
 	}
 
+//	@Test
+//	public class FileUploadTests {
+//
+//		@Autowired
+//		private MockMvc mvc;
+//
+//		@MockBean
+//		private StorageService storageService;
+//
+//		@Test
+//		public void shouldListAllFiles() throws Exception {
+//			given(this.storageService.loadAll())
+//					.willReturn(Stream.of(Paths.get("first.txt"), Paths.get("second.txt")));
+//
+//			this.mvc.perform(get("/")).andExpect(status().isOk())
+//					.andExpect(model().attribute("files",
+//							Matchers.contains("http://localhost/files/first.txt",
+//									"http://localhost/files/second.txt")));
+//		}
+//
+//		@Test
+//		public void shouldSaveUploadedFile() throws Exception {
+//			MockMultipartFile multipartFile = new MockMultipartFile("file", "test.txt",
+//					"text/plain", "Spring Framework".getBytes());
+//			this.mvc.perform(multipart("/").file(multipartFile))
+//					.andExpect(status().isFound())
+//					.andExpect(header().string("Location", "/"));
+//
+//			then(this.storageService).should().store(multipartFile);
+//		}
+//
+//		@SuppressWarnings("unchecked")
+//		@Test
+//		public void should404WhenMissingFile() throws Exception {
+//			given(this.storageService.loadAsResource("test.txt"))
+//					.willThrow(StorageFileNotFoundException.class);
+//
+//			this.mvc.perform(get("/files/test.txt")).andExpect(status().isNotFound());
+//		}
+//
+//	}
 
 
 }

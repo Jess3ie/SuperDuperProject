@@ -10,19 +10,78 @@
     </head>
     <body class="p-3 mb-2 bg-light text-black">
         <div class="container justify-content-center w-50 p-3" style="margin-top: 5em;">
-            <div th:if="${param.addNoteSuccess}" class="alert alert-success fill-parent">
+            <div th:if="${uploadSuccess}" class="alert alert-success fill-parent">
                 <h1 class="display-5" id="success">Success</h1>
-                <span>Your changes were successfully saved. Click <a>here</a> to continue.</span>
+                <span>Upload Successful. Click <a th:href="@{/home}">here</a> to return to homepage.</span>
             </div>
-            <div class="alert alert-danger fill-parent">
+            <div th:if="${deleteSuccess}" class="alert alert-success fill-parent">
+                <h1 class="display-5" id="success">Success</h1>
+                <span>File Deleted Successfully. Click <a th:href="@{/home}">here</a> to return to homepage.</span>
+            </div>
+
+<!--            New addition success messages-->
+            <div th:if="${addNoteSuccess}" class="alert alert-success fill-parent">
+                <h1 class="display-5" id="success">Success</h1>
+                <span>Note Added Successfully. Click <a th:href="@{/home}">here</a> to return to homepage.</span>
+            </div>
+            <div th:if="${addCredentialSuccess}" class="alert alert-success fill-parent">
+                <h1 class="display-5" id="success">Success</h1>
+                <span>Credential Added Successfully. Click <a th:href="@{/home}">here</a> to return to homepage.</span>
+            </div>
+
+<!--            Update success Messages-->
+            <div th:if="${updateNoteSuccess}" class="alert alert-success fill-parent">
+                <h1 class="display-5" id="success">Success</h1>
+                <span>Note Updated Successfully. Click <a th:href="@{/home}">here</a> to return to homepage.</span>
+            </div>
+            <div th:if="${updateCredentialSuccess}" class="alert alert-success fill-parent">
+                <h1 class="display-5" id="success">Success</h1>
+                <span>Credential Updated Successfully. Click <a th:href="@{/home}">here</a> to return to homepage.</span>
+            </div>
+
+<!--            Delete messages-->
+            <div th:if="${deleteNoteSuccess}" class="alert alert-success fill-parent">
+                <h1 class="display-5" id="success">Success</h1>
+                <span>Note Deleted Successfully. Click <a th:href="@{/home}">here</a> to return to homepage.</span>
+            </div>
+            <div th:if="${deleteCredentialSuccess}" class="alert alert-success fill-parent">
+                <h1 class="display-5" id="success">Success</h1>
+                <span>Note Deleted Successfully. Click <a th:href="@{/home}">here</a> to return to homepage.</span>
+            </div>
+
+            <div th:if="${param.success}" class="alert alert-success fill-parent">
+                <h1 class="display-5">Success</h1>
+                <span>Your changes were successfully saved. Click <a th:href="@{/home}">here</a> to continue.</span>
+            </div>
+            <div th:if="${param.error}" class="alert alert-danger fill-parent">
                 <h1 class="display-5">Error</h1>
-                <span>Your changes were not saved. Click <a>here</a> to continue.</span>
+                <span>Your changes were not saved. Click <a th:href="@{/home}">here</a> to continue.</span>
             </div>
-            <div class="alert alert-danger fill-parent">
+            <div th:if="${param.bigNote}" class="alert alert-danger fill-parent">
                 <h1 class="display-5">Error</h1>
-                <span>Example Error Message</span>
-                <span>Click <a>here</a> to continue.</span>
+                <span>Note description exceeded 1000 characters.</span>
+                <span>Click <a th:href="@{/home}">here</a> to continue.</span>
             </div>
+            <div th:if="${param.bigFile}" class="alert alert-danger fill-parent">
+                <h1 class="display-5">Error</h1>
+                <span>File too big to upload.</span>
+                <span>Click <a th:href="@{/home}">here</a> to continue.</span>
+            </div>
+            <div th:if="${param.duplicateFile}" class="alert alert-danger fill-parent">
+                <h1 class="display-5">Error</h1>
+                <span>File already exist.</span>
+                <span>Click <a th:href="@{/home}">here</a> to continue.</span>
+            </div>
+
+<!--            <div th:if="${sameNameExists}" class="alert alert-danger fill-parent">-->
+<!--                <h1 class="display-5">Error</h1>-->
+<!--                <span>File with same name already uploaded by this user. Click <a th:href="@{/home}">here</a> to return to homepage.</span>-->
+<!--            </div>-->
+<!--            <div th:if="${uploadFailure}" class="alert alert-danger fill-parent">-->
+<!--                <h1 class="display-5">Error</h1>-->
+<!--                <span>Upload failed successfully</span>-->
+<!--                <span>Click <a th:href="@{/home}">here</a> to return to homepage.</span>-->
+<!--            </div>-->
         </div>
     </body>
 </html>

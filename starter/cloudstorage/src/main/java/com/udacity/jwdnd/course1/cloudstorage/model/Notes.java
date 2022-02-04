@@ -14,7 +14,7 @@ public class Notes {
     private String noteDescription;
     private Integer userId;
 
-    public Notes() {
+public Notes() {
         this.noteId = noteId;
         this.noteTitle = noteTitle;
         this.noteDescription = noteDescription;

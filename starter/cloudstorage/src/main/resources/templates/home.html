@@ -11,10 +11,8 @@
     <body class="p-3 mb-2 bg-light text-black">
         <div class="container">
             <div id="logoutDiv">
-                <!-- TODO logout button-->
-
-                <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
-                    <button type="submit" class="btn btn-secondary float-right">Logout</button>
+                <form action="#" th:action="@{/logout}" method="POST">
+                    <button  type="submit" id="logoutButton" class="btn btn-secondary float-right" th:href="@{/signup}">Logout</button>
                 </form>
             </div>
             <div id="contentDiv" style="clear: right;">
@@ -27,7 +25,7 @@
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-files" role="tabpanel" aria-labelledby="nav-files-tab">
-                        <form action="#" enctype="multipart/form-data" th:action="@{/file-upload}" method="POST">
+                        <form action="#" th:action="@{/file-upload}" enctype="multipart/form-data"  method="POST">
                             <div class="container">
                                 <div class="row" style="margin: 1em;">
                                     <div class="col-sm-2">
@@ -51,21 +49,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <tr th:each="files : ${userFiles}">
                                     <td>
-                                        <a target="_blank" class="btn btn-success">View</a>
-                                        <a  class="btn btn-danger">Delete</a>
+                                        <a target="_blank" class="btn btn-success" th:href="@{'/files/view?fileId=' + ${files.fileId}}">View</a>
+                                        <a  class="btn btn-danger" th:href="@{'/files/delete?fileId=' + ${files.fileId}}">Delete</a>
+<!--                           <a th:href="@{'/note-delete/' + ${notes.getNoteId()}}" class="btn btn-danger">Delete</a>
+-->
                                     </td>
-                                    <th scope="row">ExampleFile.txt</th>
+                                    <td th:text="${files.filename}" scope="row"></td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-notes" role="tabpanel" aria-labelledby="nav-notes-tab">
-                        <button style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
+                        <button style="margin: 0.25em;" id="addNewNoteButton" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
                             + Add a New Note
                         </button>
+
+<!--                        <h4 th:if="${userNotes.isEmpty()}">No notes found for this user!</h4>-->
 
                         <div class="table-responsive">
                             <table class="table table-striped" id="userTable">
@@ -77,13 +79,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="note : ${existingNotes}">
+
+                                    <tr th:unless="${userNotes.isEmpty()}" th:each="notes : ${userNotes}">
                                         <td>
-                                            <button type="button" class="btn btn-success">Edit</button>
-                                            <a class="btn btn-danger">Delete</a>
+                                            <button type="button" class="btn btn-success" th:attr="onclick=|showNoteModal('${notes.noteId}', '${notes.noteTitle}', '${notes.noteDescription}')|">Edit</button>
+                                            <a th:href="@{'/note-delete/' + ${notes.getNoteId()}}" class="btn btn-danger">Delete</a>
                                         </td>
-                                        <th scope="row" th:text="${note.getNoteTitle()}"></th>
-                                        <td th:text="${note.getNoteDescription()}">Example Note Description </td>
+                                        <th scope="row" th:text="${notes.getNoteTitle()}"></th>
+                                        <td th:text="${notes.getNoteDescription()}">Example Note Description </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -99,7 +102,6 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-<!--                                        TODO does this need thymeleaf attributes like th:action-->
                                         <form  th:action="@{/note}" method="POST">
                                             <input type="hidden" name="noteId" id="note-id">
                                             <div class="form-group">
@@ -138,14 +140,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <tr th:each="credentials : ${userCredentials}">
                                     <td>
-                                        <button type="button" class="btn btn-success">Edit</button>
-                                        <a class="btn btn-danger">Delete</a>
+                                        <button type="button" class="btn btn-success" th:attr="onclick=|showCredentialModal('${credentials.credentialId}', '${credentials.url}', '${credentials.username}', '${credentials.password}')|">Edit</button>
+                                        <a  th:href="@{'/credential-delete/' + ${credentials.getCredentialId()}}" class="btn btn-danger">Delete</a>
                                     </td>
-                                    <th scope="row">Example Credential URL</th>
-                                    <td>Example Credential Username</td>
-                                    <td>Example Credential Password</td>
+                                    <th scope="row" th:text="${credentials.getUrl()}">Example Credential URL</th>
+                                    <td th:text="${credentials.getUsername()}">Example Credential Username</td>
+                                    <td th:text="${credentials.getPassword()}" >Example Credential Password</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -161,9 +163,8 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <!--                                        TODO does this need thymeleaf attributes like th:action-->
 
-                                        <form action="#" method="POST">
+                                        <form th:action="@{/credential}" method="POST">
                                             <input type="hidden" name="credentialId" id="credential-id">
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">URL</label>
