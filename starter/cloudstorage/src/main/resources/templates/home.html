@@ -82,8 +82,8 @@
 
                                     <tr th:unless="${userNotes.isEmpty()}" th:each="notes : ${userNotes}">
                                         <td>
-                                            <button type="button" class="btn btn-success" th:attr="onclick=|showNoteModal('${notes.noteId}', '${notes.noteTitle}', '${notes.noteDescription}')|">Edit</button>
-                                            <a th:href="@{'/note-delete/' + ${notes.getNoteId()}}" class="btn btn-danger">Delete</a>
+                                            <button id="editNoteButton" type="button" class="btn btn-success" th:attr="onclick=|showNoteModal('${notes.noteId}', '${notes.noteTitle}', '${notes.noteDescription}')|">Edit</button>
+                                            <a id="deleteNoteButton" th:href="@{'/note-delete/' + ${notes.getNoteId()}}" class="btn btn-danger">Delete</a>
                                         </td>
                                         <th scope="row" th:text="${notes.getNoteTitle()}"></th>
                                         <td th:text="${notes.getNoteDescription()}">Example Note Description </td>
@@ -118,7 +118,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" onclick="$('#noteSubmit').click();">Save changes</button>
+                                        <button type="button" class="btn btn-primary" onclick="$('#noteSubmit').click();" id="saveNoteChangesButton">Save changes</button>
                                     </div>
                                 </div>
                             </div>
