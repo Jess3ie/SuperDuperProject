@@ -20,6 +20,7 @@ class CloudStorageApplicationTests {
 
 	private WebDriver driver;
 
+
 	@BeforeAll
 	static void beforeAll() {
 		WebDriverManager.chromedriver().setup();
@@ -197,47 +198,39 @@ class CloudStorageApplicationTests {
 
 	}
 
-//	@Test
-//	public class FileUploadTests {
-//
-//		@Autowired
-//		private MockMvc mvc;
-//
-//		@MockBean
-//		private StorageService storageService;
-//
-//		@Test
-//		public void shouldListAllFiles() throws Exception {
-//			given(this.storageService.loadAll())
-//					.willReturn(Stream.of(Paths.get("first.txt"), Paths.get("second.txt")));
-//
-//			this.mvc.perform(get("/")).andExpect(status().isOk())
-//					.andExpect(model().attribute("files",
-//							Matchers.contains("http://localhost/files/first.txt",
-//									"http://localhost/files/second.txt")));
-//		}
-//
-//		@Test
-//		public void shouldSaveUploadedFile() throws Exception {
-//			MockMultipartFile multipartFile = new MockMultipartFile("file", "test.txt",
-//					"text/plain", "Spring Framework".getBytes());
-//			this.mvc.perform(multipart("/").file(multipartFile))
-//					.andExpect(status().isFound())
-//					.andExpect(header().string("Location", "/"));
-//
-//			then(this.storageService).should().store(multipartFile);
-//		}
-//
-//		@SuppressWarnings("unchecked")
-//		@Test
-//		public void should404WhenMissingFile() throws Exception {
-//			given(this.storageService.loadAsResource("test.txt"))
-//					.willThrow(StorageFileNotFoundException.class);
-//
-//			this.mvc.perform(get("/files/test.txt")).andExpect(status().isNotFound());
-//		}
-//
-//	}
+	@Test
+	public void testUserSignUpAndLogin() {
+		//Creating user
+		String username = "Jess";
+		String password = "Jess1";
 
+		driver.get("http://localhost:" + this.port + "/signup");
 
+		SignupPage signupPage = new SignupPage(driver);
+		signupPage.signup("Jessica", "Wallace", username, password);
+
+		driver.get("http://localhost:" + this.port + "/login");
+
+		//Logging in
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.login(username, password);
+
+		// verify that the home page is accessible
+		String actualUrl = "http://localhost:" + this.port + "/home";
+		String expectedUrl= driver.getCurrentUrl();
+		Assertions.assertEquals(actualUrl, expectedUrl);
+
+		//Need to log out
+		driver.findElement(By.id("logoutButton")).click();
+		actualUrl = "http://localhost:" + this.port + "/login?logout";
+		expectedUrl= driver.getCurrentUrl();
+		Assertions.assertEquals(actualUrl, expectedUrl);
+
+	}
+
+	//Test adding, editing, and deleting notes
+	@Test
+	public void testNoteCreationEditAndDelete() {
+		
+	}
 }

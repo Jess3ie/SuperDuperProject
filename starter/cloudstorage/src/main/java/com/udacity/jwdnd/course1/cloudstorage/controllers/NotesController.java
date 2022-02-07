@@ -35,6 +35,8 @@ public class NotesController {
         String description = newNote.getNoteDescription();
         notes.setNoteDescription(description);
 
+        int rowAdded = 0;
+
         if (newNote.getNoteId() != null) {
             noteService.updateNote(newNote.getNoteId(), title, description);
             model.addAttribute("updateNoteSuccess", true);
